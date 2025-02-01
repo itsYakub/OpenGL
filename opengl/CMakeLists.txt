@@ -52,12 +52,42 @@ if(NOT glfw_POPULATED)
 	FetchContent_MakeAvailable(glfw)
 endif()
 
+FetchContent_Declare(
+    cglm
+    GIT_REPOSITORY	https://github.com/recp/cglm
+    GIT_TAG			v0.9.4
+    GIT_SHALLOW		TRUE
+    GIT_PROGRESS	TRUE
+)
+
+FetchContent_GetProperties(cglm)
+if(NOT cglm_POPULATED)
+	message("-- Fetching cglm")
+    FetchContent_MakeAvailable(cglm)
+endif()
+
+FetchContent_Declare(
+	stb 
+    GIT_REPOSITORY	https://github.com/nothings/stb
+    GIT_SHALLOW		TRUE
+    GIT_PROGRESS	TRUE
+)
+
+FetchContent_GetProperties(stb)
+if(NOT stb_POPULATED)
+	message("-- Fetching stb")
+    FetchContent_MakeAvailable(stb)
+endif()
+
 project(opengl C)
 
 set(
 	SOURCES	
 	# ${CMAKE_CURRENT_SOURCE_DIR}/opengl-backend-glfw.c
 	${CMAKE_CURRENT_SOURCE_DIR}/opengl-backend-sdl.c
+	${CMAKE_CURRENT_SOURCE_DIR}/opengl-renderer.c
+	${CMAKE_CURRENT_SOURCE_DIR}/opengl-texture.c
+	${CMAKE_CURRENT_SOURCE_DIR}/opengl-draw.c
 	${CMAKE_CURRENT_SOURCE_DIR}/opengl.c
 	# ...
 )
@@ -65,6 +95,7 @@ set(
 set(
 	INCLUDE_DIRECTORIES
 	${CMAKE_CURRENT_SOURCE_DIR}
+	${stb_SOURCE_DIR}
 	# ...
 )
 
@@ -73,6 +104,7 @@ set(
 	glad
 	SDL3::SDL3
 	glfw
+	cglm
     # ...
 )
 

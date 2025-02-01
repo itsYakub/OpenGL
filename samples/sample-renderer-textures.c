@@ -1,9 +1,8 @@
 #include "opengl.h"
-
 int	main(int ac, char **av) {
 	void	*wnd;	/* opengl window generic poitner */
 	void	*rndr;	/* opengl renderer generic pointer */
-
+	int		texture;
 	/* Initializing an OpenGL window */
 	wnd = opengl_window(800, 600, "OpenGL 4.6 - Hello, window!");
 	if (!wnd) {
@@ -15,7 +14,7 @@ int	main(int ac, char **av) {
 		opengl_window_close(wnd);
 		return (2);
 	}
-
+	texture = opengl_texture_load("./texture.png");
 	while (!opengl_window_should_close(wnd)) {
 		/* All your rendering code should be placed in between "begin" and "end" functions */
 		opengl_renderer_begin(rndr);
@@ -23,7 +22,7 @@ int	main(int ac, char **av) {
 			/* Clearing the window to nice, dark color */
 			opengl_clear(0.2f, 0.2f, 0.2f, 1.0f);
 			/* Rendering a red rectangle in the middle of the screen */
-			opengl_draw_rect_ex(
+			opengl_draw_texture_ex(
 					rndr, 
 					(float [4]) { 
 						opengl_window_get_screen_w(wnd) / 2.0f,
@@ -31,13 +30,16 @@ int	main(int ac, char **av) {
 						256.0f, 256.0f
 					}, 
 					(float [4]) { 
-						0.8f, 0.1f, 0.1f, 1.0f 
+						1.0f, 1.0f, 1.0f, 1.0f 
+					}, 
+					(float [4]) {
+						0.0f, 0.0f, 1.0f, 1.0f 
 					},
 					(float [2]) {
-						128.0f,
-						128.0f
+						128.0f, 128.0f
 					},
-					45.0f
+					0.0f,
+					texture
 				);
 
 		opengl_renderer_end(rndr);
@@ -49,6 +51,7 @@ int	main(int ac, char **av) {
 	}
 	
 	/* Remember to close the renderer and the window before exit */
+	opengl_texture_del(texture);
 	opengl_renderer_close(rndr);
 	opengl_window_close(wnd);
 

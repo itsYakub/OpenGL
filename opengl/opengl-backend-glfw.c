@@ -35,14 +35,14 @@ void	*opengl_window(unsigned w, unsigned h, const char *t) {
 	return (_wnd);
 }
 
-int	opengl_should_close(void *wnd) {
+int	opengl_window_should_close(void *wnd) {
 	t_wnd	*_wnd;
 
 	_wnd = (t_wnd *) wnd;
 	return (glfwWindowShouldClose(_wnd->ptr));
 }
 
-int	opengl_close(void *wnd) {
+int	opengl_window_close(void *wnd) {
 	t_wnd	*_wnd;
 
 	_wnd = (t_wnd *) wnd;
@@ -50,14 +50,14 @@ int	opengl_close(void *wnd) {
 	return (1);
 }
 
-int	opengl_poll_events(void *wnd) {
+int	opengl_window_poll_events(void *wnd) {
 	t_wnd		*_wnd;
 
 	_wnd = (t_wnd *) wnd;
 	return (1);
 }
 
-int	opengl_swap_buffers(void *wnd) {
+int	opengl_window_swap_buffers(void *wnd) {
 	t_wnd	*_wnd;
 
 	_wnd = (t_wnd *) wnd;
@@ -65,7 +65,7 @@ int	opengl_swap_buffers(void *wnd) {
 	return (1);
 }
 
-int	opengl_get_screen_w(void *wnd) {	
+int	opengl_window_get_screen_w(void *wnd) {	
 	t_wnd	*_wnd;
 	int		_w;
 	int		_h;
@@ -75,7 +75,7 @@ int	opengl_get_screen_w(void *wnd) {
 	return (_w);
 }
 
-int	opengl_get_screen_h(void *wnd) {
+int	opengl_window_get_screen_h(void *wnd) {
 	t_wnd	*_wnd;
 	int		_w;
 	int		_h;
