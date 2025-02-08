@@ -10,6 +10,7 @@ set(
 	sample-window
 	sample-renderer
 	sample-renderer-textures
+	sample-renderer-text
 )
 
 foreach(sample IN LISTS OPENGL_SAMPLES)

@@ -1,6 +1,7 @@
 #include "opengl.h"
 
 #include <stdlib.h>
+#include <string.h>
 #include "glad/gl.h"
 #include "cglm/cglm.h"
 
@@ -129,5 +130,38 @@ int	opengl_draw_texture_ex(void *rndr, float rec[4], float col[4], float uv[4], 
 		v3[1] = rec[1] + (d[0] + rec[2]) * r[0] + (d[1] + rec[3]) * r[1];
 		v3[2] = 0.0f;
 	}
-	return (__opengl_draw_quad(rndr, v0, v1, v2, v3, col, (float [4]) { 0.0f, 0.0f, 1.0f, 1.0f }, id));
+	return (__opengl_draw_quad(rndr, v0, v1, v2, v3, col, uv, id));
+}
+
+int	opengl_draw_font(void *rndr, void *font, const char *text, float pos[2], float siz, float spacing, float col[4]) {
+	unsigned	_id;
+	float		_text_cursor[2];
+	float		_glyph_siz[2];
+	float		_glyph_uv[4];
+
+	_id = opengl_font_texture(font);
+	memcpy(_text_cursor, pos, sizeof(float) * 2);
+	while (*text) {
+		opengl_font_siz(font, *text, _glyph_siz);
+		opengl_font_uv(font, *text, _glyph_uv);
+		opengl_draw_texture_ex(
+			rndr,
+			(float [4]) {
+				_text_cursor[0],
+				_text_cursor[1],
+				_glyph_siz[0] * siz,
+				_glyph_siz[1] * siz
+			},
+			col,
+			_glyph_uv,
+			(float [2]) {
+				0.0f, 0.0f
+			},
+			0.0f,
+			_id
+		);
+		_text_cursor[0] += _glyph_siz[0] * siz + spacing;
+		text++;
+	}
+	return (1);
 }

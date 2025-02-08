@@ -1,8 +1,9 @@
 #include "opengl.h"
 
 int	main(int ac, char **av) {
-	void	*wnd;
+	void	*wnd;	/* opengl window generic poitner */
 
+	/* Initializing an OpenGL window */
 	wnd = opengl_window(800, 600, "OpenGL 4.6 - Hello, window!");
 	if (!wnd) {
 		return (1);
@@ -14,6 +15,7 @@ int	main(int ac, char **av) {
 		opengl_window_poll_events(wnd);
 	}
 
+	/* Remember to close the renderer and the window before exit */
 	opengl_window_close(wnd);
 
 	return (0);

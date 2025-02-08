@@ -3,6 +3,7 @@
 int	main(int ac, char **av) {
 	void	*wnd;		/* opengl window generic poitner */
 	void	*rndr;		/* opengl renderer generic pointer */
+	void	*font;		/* opengl font generic pointer */
 	int		texture;	/* opengl texture id */
 
 	/* Initializing an OpenGL window */
@@ -16,7 +17,8 @@ int	main(int ac, char **av) {
 		opengl_window_close(wnd);
 		return (2);
 	}
-	/* Loading a texture */
+	/* Loading a font */
+	font = opengl_font("./font.ttf", 64);
 	texture = opengl_texture_load("./texture.png");
 	while (!opengl_window_should_close(wnd)) {
 		/* All your rendering code should be placed in between "begin" and "end" functions */
@@ -24,6 +26,19 @@ int	main(int ac, char **av) {
 
 			/* Clearing the window to nice, dark color */
 			opengl_clear(0.2f, 0.2f, 0.2f, 1.0f);
+			/* Rendering a string on the screen */
+			opengl_draw_font(
+					rndr,
+					font,
+					"Hello, world!", 
+					(float [2]) { 
+						248.0f, 96.0f 
+					},
+					1.0f, 4.0f,
+					(float [4]) {
+						1.0f, 1.0f, 1.0f, 1.0f
+					}
+				);
 			/* Rendering a texture in the middle of the screen */
 			opengl_draw_texture_ex(
 					rndr, 
@@ -54,6 +69,7 @@ int	main(int ac, char **av) {
 	}
 	
 	/* Remember to close the renderer and the window before exit */
+	opengl_font_unload(font);
 	opengl_texture_del(texture);
 	opengl_renderer_close(rndr);
 	opengl_window_close(wnd);

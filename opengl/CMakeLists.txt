@@ -79,6 +79,20 @@ if(NOT stb_POPULATED)
     FetchContent_MakeAvailable(stb)
 endif()
 
+FetchContent_Declare(
+	freetype
+    GIT_REPOSITORY	https://github.com/freetype/freetype
+	GIT_TAG VER-2-13-3
+    GIT_SHALLOW		TRUE
+    GIT_PROGRESS	TRUE
+)
+
+FetchContent_GetProperties(freetype)
+if(NOT freetype_POPULATED)
+	message("-- Fetching freetype")
+    FetchContent_MakeAvailable(freetype)
+endif()
+
 project(opengl C)
 
 set(
@@ -87,6 +101,7 @@ set(
 	${CMAKE_CURRENT_SOURCE_DIR}/opengl-backend-sdl.c
 	${CMAKE_CURRENT_SOURCE_DIR}/opengl-renderer.c
 	${CMAKE_CURRENT_SOURCE_DIR}/opengl-texture.c
+	${CMAKE_CURRENT_SOURCE_DIR}/opengl-text.c
 	${CMAKE_CURRENT_SOURCE_DIR}/opengl-draw.c
 	${CMAKE_CURRENT_SOURCE_DIR}/opengl.c
 	# ...
@@ -105,6 +120,7 @@ set(
 	SDL3::SDL3
 	glfw
 	cglm
+	freetype
     # ...
 )
 

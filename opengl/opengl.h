@@ -45,6 +45,7 @@ int	opengl_draw_rect(void *rndr, float rec[4], float col[4]);
 int	opengl_draw_rect_ex(void *rndr, float rec[4], float col[4], float off[2], float rot);
 int	opengl_draw_texture(void *rndr, float rec[4], float col[4], unsigned id);
 int	opengl_draw_texture_ex(void *rndr, float rec[4], float col[4], float uv[4], float off[2], float rot, unsigned id);
+int	opengl_draw_font(void *rndr, void *font, const char *text, float pos[2], float siz, float spacing, float col[4]);
 
 /*	API:
  *		Texture
@@ -53,6 +54,16 @@ int	opengl_draw_texture_ex(void *rndr, float rec[4], float col[4], float uv[4], 
 int	opengl_texture(int w, int h, void *dat);
 int	opengl_texture_load(const char *path);
 int	opengl_texture_del(unsigned id);
+
+/*	API:
+ *		Font
+ * */
+
+void	*opengl_font(const char *path, unsigned siz);
+int		opengl_font_unload(void *font);
+int		opengl_font_texture(void *font);
+int		opengl_font_siz(void *font, int glyph, float dst[2]);
+int		opengl_font_uv(void *font, int glyph, float dst[4]);
 
 int	opengl_shader(const char **glsl_vert, const char **glsl_frag);
 int	opengl_clear(float r, float g, float b, float a);
