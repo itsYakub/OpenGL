@@ -3,8 +3,8 @@
 int	main(int ac, char **av) {
 	void	*wnd;		/* opengl window generic poitner */
 	void	*rndr;		/* opengl renderer generic pointer */
-	void	*font;		/* opengl font generic pointer */
 	int		texture;	/* opengl texture id */
+	void	*font;		/* opengl font generic pointer */
 
 	/* Initializing an OpenGL window */
 	wnd = opengl_window(800, 600, "OpenGL 4.6 - Hello, window!");
@@ -18,7 +18,7 @@ int	main(int ac, char **av) {
 		return (2);
 	}
 	/* Loading a font */
-	font = opengl_font("./font.ttf", 64);
+	font = opengl_font("./font.ttf", 128, 64);
 	texture = opengl_texture_load("./texture.png");
 	while (!opengl_window_should_close(wnd)) {
 		/* All your rendering code should be placed in between "begin" and "end" functions */
@@ -32,9 +32,9 @@ int	main(int ac, char **av) {
 					font,
 					"Hello, world!", 
 					(float [2]) { 
-						248.0f, 96.0f 
+						0.0f, 0.0f 
 					},
-					1.0f, 4.0f,
+					1.0f,
 					(float [4]) {
 						1.0f, 1.0f, 1.0f, 1.0f
 					}

@@ -133,21 +133,25 @@ int	opengl_draw_texture_ex(void *rndr, float rec[4], float col[4], float uv[4], 
 	return (__opengl_draw_quad(rndr, v0, v1, v2, v3, col, uv, id));
 }
 
-int	opengl_draw_font(void *rndr, void *font, const char *text, float pos[2], float siz, float spacing, float col[4]) {
+int	opengl_draw_font(void *rndr, void *font, const char *text, float pos[2], float siz, float col[4]) {
 	unsigned	_id;
+	float		_atlas_siz[2];
 	float		_text_cursor[2];
+	float		_glyph_adv[2];
 	float		_glyph_siz[2];
 	float		_glyph_uv[4];
 
 	_id = opengl_font_texture(font);
 	memcpy(_text_cursor, pos, sizeof(float) * 2);
+	opengl_texture_siz(_id, _atlas_siz);
 	while (*text) {
 		opengl_font_siz(font, *text, _glyph_siz);
+		opengl_font_advance(font, *text, _glyph_adv);
 		opengl_font_uv(font, *text, _glyph_uv);
 		opengl_draw_texture_ex(
 			rndr,
 			(float [4]) {
-				_text_cursor[0],
+				_text_cursor[0] + ((_glyph_adv[0] - _glyph_siz[0]) / 2.0f),
 				_text_cursor[1],
 				_glyph_siz[0] * siz,
 				_glyph_siz[1] * siz
@@ -160,7 +164,7 @@ int	opengl_draw_font(void *rndr, void *font, const char *text, float pos[2], flo
 			0.0f,
 			_id
 		);
-		_text_cursor[0] += _glyph_siz[0] * siz + spacing;
+		_text_cursor[0] += ((int) _glyph_adv[0]) * siz;
 		text++;
 	}
 	return (1);
